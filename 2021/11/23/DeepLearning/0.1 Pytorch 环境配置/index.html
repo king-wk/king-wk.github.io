@@ -51,7 +51,7 @@
 <!-- header container -->
 <header class="header-container post">
   
-    <div class="post-image" style="background-image: url(https://cloud.miiiku.xyz/src/images/cover/cover-06.jpg-webp)"></div>
+    <div class="post-image" style="background-image: url(https://images.anime-pictures.net/d08/d0856b9f1d841ea3f7bde188ba771184.jpeg?if=ANIME-PICTURES.NET_-_774530-2700x1700-one+piece-toei+animation-yamato+%28one+piece%29-machida+0906-single-long+hair.jpeg)"></div>
   
 
   <!-- navbar -->
@@ -160,7 +160,9 @@
 <p>在 pytorch_gpu 的虚拟环境中执行下载 pytorch 的命令，然后选择 y，回车等待下载。</p>
 <p>下载完毕之后，在虚拟环境中，进行测试：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(pytorch_gpu) C:\Users\W&gt;python</span><br><span class="line">Python <span class="number">3.6</span><span class="number">.13</span> |Anaconda, Inc.| (default, Mar <span class="number">16</span> <span class="number">2021</span>, <span class="number">11</span>:<span class="number">37</span>:<span class="number">27</span>) [MSC v<span class="number">.1916</span> <span class="number">64</span> bit (AMD64)] on win32</span><br><span class="line"><span class="type">Type</span> <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> <span class="keyword">or</span> <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">print</span>(torch.__version__)</span><br><span class="line"><span class="number">1.1</span><span class="number">.0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.cuda.is_available()</span><br><span class="line"><span class="literal">True</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>exit()</span><br></pre></td></tr></table></figure>
-<h3 id="Linux-系统（以-Ubuntu-18-04-为例）"><a href="#Linux-系统（以-Ubuntu-18-04-为例）" class="headerlink" title="Linux 系统（以 Ubuntu 18.04 为例）"></a>Linux 系统（以 Ubuntu 18.04 为例）</h3></li>
+</li>
+</ul>
+<h3 id="Linux-系统（以-Ubuntu-18-04-为例）"><a href="#Linux-系统（以-Ubuntu-18-04-为例）" class="headerlink" title="Linux 系统（以 Ubuntu 18.04 为例）"></a>Linux 系统（以 Ubuntu 18.04 为例）</h3><ul>
 <li>下载驱动，可以使用命令 <code>ubuntu-drivers devices</code> 查看可下载的和推荐的驱动版本，然后直接在 software and update 下即可，我使用的是 460。然后可以使用 <code>nvidia-smi</code> 查看版本内容，如下图，我的是 460，有 24 GB。<br><img src="/assets/DeepLearning/nvidia.png" alt="nvidia"></li>
 <li><p>下载 CUDA，查询官网 nVidia 对应的 CUDA 版本，<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">官网地址</a>. 由于我的显卡是 3090 的，必须要 CUDA11 往上的版本才能支持 3090，所以我使用的是 cuda11.1 版本。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://developer.download.nvidia.com/compute/cuda/11.1.1/local_installers/cuda_11.1.1_455.32.00_linux.run</span><br><span class="line">sudo sh cuda_11.1.1_455.32.00_linux.run</span><br></pre></td></tr></table></figure>
@@ -168,7 +170,8 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export CUDA_HOME=/usr/local/cuda</span><br><span class="line">export PATH=$PATH:$CUDA_HOME/bin</span><br><span class="line">export LD_LIBRARY_PATH=/usr/local/cuda-11.1/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;</span><br></pre></td></tr></table></figure>
 <p>执行命令 <code>source ~/.bashrc</code> 使得变量生效。</p>
 <p>验证是否成功</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(base) netlab@netlab:/usr/local$ nvcc -V</span><br><span class="line">nvcc: NVIDIA (R) Cuda compiler driver</span><br><span class="line">Copyright (c) 2005-2020 NVIDIA Corporation</span><br><span class="line">Built on Mon_Oct_12_20:09:46_PDT_2020</span><br><span class="line">Cuda compilation tools, release 11.1, V11.1.105</span><br><span class="line">Build cuda_11.1.TC455_06.29190527_0</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(base) netlab@netlab:/usr/local$ nvcc -V</span><br><span class="line">nvcc: NVIDIA (R) Cuda compiler driver</span><br><span class="line">Copyright (c) 2005-2020 NVIDIA Corporation</span><br><span class="line">Built on Mon_Oct_12_20:09:46_PDT_2020</span><br><span class="line">Cuda compilation tools, release 11.1, V11.1.105</span><br><span class="line">Build cuda_11.1.TC455_06.29190527_0</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>如果显卡是 3090，还需要安装 cudnn：进入 <a target="_blank" rel="noopener" href="https://developer.nvidia.com/rdp/cudnn-archive">官网</a>，下载对应安装包，安装时有三个包需要安装：runtime、developer、sample，我下的是 8.1.1 版本的，必须先安装runtime再安装developer否则会报错。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i libcudnn8_8.1.1.33-1+cuda11.2_amd64.deb </span><br><span class="line">sudo dpkg -i libcudnn8-dev_8.1.1.33-1+cuda11.2_amd64.deb</span><br><span class="line">sudo dpkg -i libcudnn8-samples_8.1.1.33-1+cuda11.2_amd64.deb</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#verify">检测安装</a><br>如果检测过程中，报错 <code>fatal error: FreeImage.h: No such file or directory...</code>，是因为缺少包导致的，需要安装对应包：</p>
@@ -187,7 +190,7 @@
 <p>进入环境：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate pytorch1<span class="number">.8</span></span><br></pre></td></tr></table></figure>
 <p>退出环境：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>在虚拟环境中下载 pytorch：去 <a target="_blank" rel="noopener" href="https://pytorch.org/get-started/">官网</a> 找到对应的命令行语句：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch==<span class="number">1.8</span><span class="number">.0</span> torchvision==<span class="number">0.9</span><span class="number">.0</span> torchaudio==<span class="number">0.8</span><span class="number">.0</span> cudatoolkit=<span class="number">11.1</span> -c pytorch -c conda-forge</span><br></pre></td></tr></table></figure>
 <p>测试下载成功：</p>
@@ -204,11 +207,11 @@
             <div class="article-nav-item layout-padding">
   <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
     
-      <div class="card-cover" background-image-lazy data-img="https://cloud.miiiku.xyz/src/images/cover/cover-10.jpg-webp"></div>
+      <div class="card-cover" background-image-lazy data-img="https://images.anime-pictures.net/fe6/fe681ec4cb090a1b56c2f5dfe933fc01.png?if=ANIME-PICTURES.NET_-_771306-2204x1240-original-rune+xiao-highres-wide+image-signed-cloud+%28clouds%29.png"></div>
     
     <div class="card-text">
       
-        <a href="/2021/11/24/0.2%20Pytorch%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/" itemprop="url">
+        <a href="/2021/11/24/DeepLearning/0.2%20Pytorch%20%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C/" itemprop="url">
           <h2 class="card-text--title text-ellipsis">Pytorch 数据操作</h2>
         </a>
       
@@ -221,11 +224,11 @@
             <div class="article-nav-item layout-padding">
   <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
     
-      <div class="card-cover" background-image-lazy data-img="https://cloud.miiiku.xyz/src/images/cover/cover-04.jpg-webp"></div>
+      <div class="card-cover" background-image-lazy data-img="https://images.anime-pictures.net/783/78310f10ae7243486e820e9521a9b868.png?if=ANIME-PICTURES.NET_-_774333-4000x5333-original-banishment-tall+image-highres-signed-sky.png"></div>
     
     <div class="card-text">
       
-        <a href="/2021/11/23/0.0%20Ubuntu%20%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85/" itemprop="url">
+        <a href="/2021/11/23/DeepLearning/0.0%20Ubuntu%20%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85/" itemprop="url">
           <h2 class="card-text--title text-ellipsis">Ubuntu 系统安装</h2>
         </a>
       
@@ -286,19 +289,19 @@
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>6</span>
+        <span>7</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
 </svg>
-        1
+        2
       </div>
       <div class="count-box--item">
         <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
 </svg>
-        4
+        6
       </div>
     </div>
   </div>
@@ -336,6 +339,12 @@
           </a>
         </li>
       
+        <li class="categorys-list-item">
+          <a href="/categories/Psychology/">
+            Psychology (1)
+          </a>
+        </li>
+      
     </ul>
   </div>
 </section>
@@ -349,7 +358,7 @@
   </div>
   <div class="widget-body">
     <div class="tags-cloud">
-      <a href="/tags/DeepLearning/" style="font-size: 20px;" class="tags-cloud-10">DeepLearning</a> <a href="/tags/LinearRegression/" style="font-size: 10px;" class="tags-cloud-0">LinearRegression</a> <a href="/tags/Pytorch/" style="font-size: 15px;" class="tags-cloud-5">Pytorch</a> <a href="/tags/Ubuntu/" style="font-size: 10px;" class="tags-cloud-0">Ubuntu</a>
+      <a href="/tags/DeepLearning/" style="font-size: 20px;" class="tags-cloud-10">DeepLearning</a> <a href="/tags/Life/" style="font-size: 10px;" class="tags-cloud-0">Life</a> <a href="/tags/LinearRegression/" style="font-size: 10px;" class="tags-cloud-0">LinearRegression</a> <a href="/tags/Psychology/" style="font-size: 10px;" class="tags-cloud-0">Psychology</a> <a href="/tags/Pytorch/" style="font-size: 15px;" class="tags-cloud-5">Pytorch</a> <a href="/tags/Ubuntu/" style="font-size: 10px;" class="tags-cloud-0">Ubuntu</a>
     </div>
   </div>
 </section>
