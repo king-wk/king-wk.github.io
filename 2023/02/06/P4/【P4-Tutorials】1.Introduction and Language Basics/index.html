@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 5.4.0">
+
+  
+    <meta name="description" content=" keywords: ">
+  
+
+  
+
+  
+    <meta name="author" content="double 静">
+  
+
+  
+
+  
+
+  <title>【P4-Tutorials】1.Introduction and Language Basics | 怪兽少女</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/fig.ico">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@1.1.3/index.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs@9.16.2/styles/monokai.css">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://cdn.magdeleine.co/wp-content/uploads/2021/05/cute-rabbits-1400x933.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          怪兽少女
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/summary">归档</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">分享</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">【P4-Tutorials】1.Introduction and Language Basics</h1>
+          <h2 class="title-sub-wrap">
+            <strong>double 静</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2023-02-06T14:58:16.000Z" itemprop="datePublished">2023-02-06</time>
+          </h2>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/P4/">📒 P4</a></li>
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/P4/">🏷️ P4</a></li>
+  
+    <li><a href="/tags/P4-Tutorials/">🏷️ P4-Tutorials</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h2 id="1-1-Basic-Forwarding-（基础-ipv4-转发）"><a href="#1-1-Basic-Forwarding-（基础-ipv4-转发）" class="headerlink" title="1.1 Basic Forwarding （基础 ipv4 转发）"></a>1.1 Basic Forwarding （基础 ipv4 转发）</h2><p>1）实现基本 ipv4 转发</p>
+<p>2）交换机必须对每个数据包执行以下操作:</p>
+<ul>
+<li>更新源和目标 <code>MAC</code> 地址</li>
+<li>减少 <code>IP</code> 报头中的生存时间（<code>TTL</code>）</li>
+<li>将数据包转发到适当的端口</li>
+</ul>
+<p>网络拓扑图根据 <code>topology.json</code> 定义，如下图：</p>
+<p><img src="/assets/P4/P4-Tutorials%200.2pod-topo.png" alt="topo"></p>
+<p>需要实现的部分为解析 <code>Parser</code>、<code>Ingress Processing</code>、逆解析 <code>Deparser</code> 三部分。</p>
+<p><strong>Parser 部分</strong>：主要要解析以太网头和 <code>ip</code> 头，数据包转发不涉及 <code>tcp</code> 层，所以可以不解析。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// inout：同时作为输入和输出值，类似 c++ 里面的引用</span></span><br><span class="line"><span class="comment">// in：输入，只读</span></span><br><span class="line"><span class="comment">// out：输出</span></span><br><span class="line"><span class="function">parser <span class="title">MyParser</span><span class="params">(packet_in packet,</span></span></span><br><span class="line"><span class="params"><span class="function">                out headers hdr,</span></span></span><br><span class="line"><span class="params"><span class="function">                inout metadata meta,</span></span></span><br><span class="line"><span class="params"><span class="function">                inout <span class="keyword">standard_metadata_t</span> standard_metadata)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 从 start 开始</span></span><br><span class="line">    state start &#123;</span><br><span class="line">        <span class="comment">/* <span class="doctag">TODO:</span> add parser logic */</span></span><br><span class="line">        <span class="comment">// transition accept;</span></span><br><span class="line">        transition parse_ethernet;</span><br><span class="line">        <span class="comment">// 单独的 transition 可以理解为跳转</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 解析数据包以太头</span></span><br><span class="line">    state parse_ethernet &#123;</span><br><span class="line">        packet.<span class="built_in">extract</span>(hdr.ethernet);  <span class="comment">// 根据定义结构提取以太包头</span></span><br><span class="line">        <span class="comment">// 根据 etherType, 选择转移到其他状态，直到转移到 accept 或者 reject;</span></span><br><span class="line">        <span class="comment">// transition select 可以理解为 C++ 中的 switch-case 语句，对参数进行值的匹配。</span></span><br><span class="line">        <span class="function">transition <span class="title">select</span><span class="params">(hdr.ethernet.etherType)</span> </span>&#123;</span><br><span class="line">            <span class="comment">// 如果是 0x0800，也就是 ipv4 数据包，则转移到 parse_ipv4 状态</span></span><br><span class="line">            TYPE_IPV4: parse_ipv4;</span><br><span class="line">            <span class="comment">// 默认是接受，进入下一步处理</span></span><br><span class="line">            <span class="keyword">default</span>: accept;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 解析 ipv4 数据包头</span></span><br><span class="line">    state parse_ipv4 &#123;</span><br><span class="line">        <span class="comment">// 提取 ip 包头</span></span><br><span class="line">        packet.<span class="built_in">extract</span>(hdr.ipv4);</span><br><span class="line">        transition accept;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">// MyParser 的作用是解析数据包，提取包头</span></span><br></pre></td></tr></table></figure>
+<p><strong>Ingress processing 部分</strong>：根据解析得到的 <code>ip</code> 头的目的 <code>ip</code> 地址来匹配动作，简单来说就是对目的 <code>ip</code> 地址进行最长前缀匹配，实现查表转发，如果匹配到的动作是 <code>ipv4_forward</code>，也就是转发，而且动作的参数是 <code>MAC</code> 地址和端口，那么这个动作就是把这个数据包以太头的源 <code>MAC</code> 地址变成以太头的目的 <code>MAC</code> 地址，也就是这个交换机的 <code>MAC</code> 地址，把目的 <code>MAC</code> 地址设置为参数中的 <code>MAC</code> 地址，也就是这个交换机根据目的 <code>ip</code> 地址匹配到的动作参数之一，其实就是下一跳的 <code>MAC</code> 地址，端口同理；然后设置 <code>TTL - 1</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">control <span class="title">MyIngress</span><span class="params">(inout headers hdr,</span></span></span><br><span class="line"><span class="params"><span class="function">                  inout metadata meta,</span></span></span><br><span class="line"><span class="params"><span class="function">                  inout <span class="keyword">standard_metadata_t</span> standard_metadata)</span> </span>&#123;</span><br><span class="line">    <span class="function">action <span class="title">drop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">mark_to_drop</span>(standard_metadata);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//要实现一个 ipv4_forward 操作，可以设置下一跳的出端口、用交换机的 MAC 地址更新数据包的源 MAC 地址、用下一个跃点的地址更新数据包的目的 MAC 地址，并减少 ttl 字段</span></span><br><span class="line">    <span class="function">action <span class="title">ipv4_forward</span><span class="params">(macAddr_t dstAddr, egressSpec_t port)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/* <span class="doctag">TODO:</span> fill out code in action body */</span></span><br><span class="line">        standard_metadata.egress_spec = port;</span><br><span class="line">        <span class="comment">// 设置下一跳的出端口</span></span><br><span class="line">        hdr.ethernet.srcAddr = hdr.ethernet.dstAddr;</span><br><span class="line">        <span class="comment">// 用交换机的 MAC 地址更新数据包的源 MAC 地址</span></span><br><span class="line">        hdr.ethernet.dstAddr = dstAddr;</span><br><span class="line">        <span class="comment">// 用下一个跃点的地址更新数据包的目的 MAC 地址</span></span><br><span class="line">        <span class="comment">// egress_spec 是 standard_metadata_t 中的一个字段</span></span><br><span class="line">        hdr.ipv4.ttl = hdr.ipv4.ttl - <span class="number">1</span>;  <span class="comment">// 减少 ttl 字段</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 表的 key 是目的 ip 地址</span></span><br><span class="line">    table ipv4_lpm &#123;</span><br><span class="line">        key = &#123;</span><br><span class="line">            hdr.ipv4.dstAddr: lpm;</span><br><span class="line">        &#125;</span><br><span class="line">        actions = &#123;</span><br><span class="line">            ipv4_forward;</span><br><span class="line">            drop;</span><br><span class="line">            NoAction;</span><br><span class="line">        &#125;</span><br><span class="line">        size = <span class="number">1024</span>;</span><br><span class="line">        default_action = <span class="built_in">NoAction</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    apply &#123;</span><br><span class="line">        <span class="comment">/* <span class="doctag">TODO:</span> fix ingress control logic</span></span><br><span class="line"><span class="comment">         *  - ipv4_lpm should be applied only when IPv4 header is valid</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="comment">// ipv4_lpm.apply();</span></span><br><span class="line">        <span class="comment">//仅当 ipv4 报头是有效的，才应用 ipv4_lpm</span></span><br><span class="line">        <span class="keyword">if</span> (hdr.ipv4.<span class="built_in">isValid</span>()) &#123;</span><br><span class="line">            ipv4_lpm.<span class="built_in">apply</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">// MyIngress 的作用是输入处理</span></span><br></pre></td></tr></table></figure>
+<p><strong>Deparser 部分</strong>：这部分就是重新打包数据包，按照拆包的顺序，<code>parser</code> 先解析哪个包头，就先打包哪个包头。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">control <span class="title">MyDeparser</span><span class="params">(packet_out packet, in headers hdr)</span> </span>&#123;</span><br><span class="line">    apply &#123;</span><br><span class="line">        <span class="comment">/* <span class="doctag">TODO:</span> add deparser logic */</span></span><br><span class="line">        <span class="comment">// 使用 emit 函数重构数据包</span></span><br><span class="line">        packet.<span class="built_in">emit</span>(hdr.ethernet);</span><br><span class="line">        packet.<span class="built_in">emit</span>(hdr.ipv4);</span><br><span class="line">        <span class="comment">// 顺序不能对调，对调之后无法 ping 通</span></span><br><span class="line">        <span class="comment">// 因为要按照解析的顺序装回去，前面先拆的是 ethernet，就先装 thernet</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">// MyDeparser 是逆解析器</span></span><br></pre></td></tr></table></figure>
+<p>补充之后，顺利 ping 通：</p>
+<p><img src="/assets/P4/P4-Tutorials%201.1testping.png" alt="ping"></p>
+<h2 id="1-2-Basic-Tunneling（隧道传输）"><a href="#1-2-Basic-Tunneling（隧道传输）" class="headerlink" title="1.2 Basic Tunneling（隧道传输）"></a>1.2 Basic Tunneling（隧道传输）</h2><p>在上面 <code>ipv4</code> 转发的基础上，添加基本隧道传输功能。</p>
+<p>1）定义一个新的报头类型 <code>myTunnel_t</code> 来封装 <code>ip</code> 数据包并修改交换机代码，以便它使用新的隧道报头来决定目标端口</p>
+<p>2）新的头类型将包含两个 16 位字段 <code>proto_id</code> 和 <code>dst_id</code>。<code>myTunnel</code> 报头对应的 <code>etherType</code> 为 <code>0x1212</code>，该 <code>proto_id</code> 指示要封装的数据包的类型，以及用于路由的目的地 <code>id</code></p>
+<p>3）定义一个名为 <code>myTunnel_forward</code> 的新动作，它简单地将出口端口（即 <code>standard_metadata</code> 总线的 <code>egress_spec</code> 字段）设置为控制平面提供的端口号</p>
+<p>4）如果 <code>myTunnel</code> 报头是有效的，更新 <code>MyIngress</code> 控制块中的 <code>apply</code> 语句来应用你新定义的 <code>myTunnel_exact</code> 表；否则，如果 <code>ipv4</code> 报头有效，则调用 <code>ipv4_lpm</code> 表</p>
+<p>网络拓扑图如下所示，每台主机对应一个隧道 <code>id</code>，即 <code>dst_id</code>。</p>
+<p><img src="/assets/P4/P4-Tutorials%201.2test_topo.png" alt="topo"></p>
+<p>查看 <code>s1-runtime.json</code>，可以发现，<code>myTunnel_exact</code> 这个表的作用就是，按照隧道头中的目的隧道 <code>dst_id</code> 字段来进行转发，不管 <code>ip</code> 地址是什么。比如 <code>h1</code> 发送数据包，设置隧道头中的 <code>dst_id</code> 字段为 3，则 <code>s1</code> 不管这个数据包的 <code>ip</code> 地址是多少，根据 <code>dst_id=3</code> 匹配到的端口值是 3，那么直接从端口 3 转发出去。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;table&quot;</span>: <span class="string">&quot;MyIngress.myTunnel_exact&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;match&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;hdr.myTunnel.dst_id&quot;</span>: [<span class="number">1</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;action_name&quot;</span>: <span class="string">&quot;MyIngress.myTunnel_forward&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;action_params&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;port&quot;</span>: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;table&quot;</span>: <span class="string">&quot;MyIngress.myTunnel_exact&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;match&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;hdr.myTunnel.dst_id&quot;</span>: [<span class="number">2</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;action_name&quot;</span>: <span class="string">&quot;MyIngress.myTunnel_forward&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;action_params&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;port&quot;</span>: <span class="number">2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;table&quot;</span>: <span class="string">&quot;MyIngress.myTunnel_exact&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;match&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;hdr.myTunnel.dst_id&quot;</span>: [<span class="number">3</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;action_name&quot;</span>: <span class="string">&quot;MyIngress.myTunnel_forward&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;action_params&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;port&quot;</span>: <span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要实现的部分为解析 <code>Parser</code>、<code>Ingress Processing</code>、逆解析 <code>Deparser</code> 三部分。</p>
+<p><strong>Parser 部分</strong>：增加一个头类型，需要先看看是不是 <code>myTunnel</code> 并解析，然后再解析 <code>ip</code> 头。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// <span class="doctag">TODO:</span> Update the parser to parse the myTunnel header as well</span></span><br><span class="line"><span class="function">parser <span class="title">MyParser</span><span class="params">(packet_in packet,</span></span></span><br><span class="line"><span class="params"><span class="function">                out headers hdr,</span></span></span><br><span class="line"><span class="params"><span class="function">                inout metadata meta,</span></span></span><br><span class="line"><span class="params"><span class="function">                inout <span class="keyword">standard_metadata_t</span> standard_metadata)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    state start &#123;</span><br><span class="line">        transition parse_ethernet;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    state parse_ethernet &#123;</span><br><span class="line">        packet.<span class="built_in">extract</span>(hdr.ethernet);</span><br><span class="line">        <span class="comment">// 根据以太网报头中的 etherType 字段提取 myTunnel 报头或 ipv4 报头</span></span><br><span class="line">        <span class="function">transition <span class="title">select</span><span class="params">(hdr.ethernet.etherType)</span> </span>&#123;</span><br><span class="line">            TYPE_MYTUNNEL : parse_myTunnel;</span><br><span class="line">            TYPE_IPV4 : parse_ipv4;</span><br><span class="line">            <span class="keyword">default</span> : accept;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    state parse_myTunnel &#123;</span><br><span class="line">        packet.<span class="built_in">extract</span>(hdr.myTunnel);</span><br><span class="line">        <span class="function">transition <span class="title">select</span><span class="params">(hdr.myTunnel.proto_id)</span> </span>&#123;</span><br><span class="line">            TYPE_IPV4 : parse_ipv4;</span><br><span class="line">            <span class="keyword">default</span> : accept;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    state parse_ipv4 &#123;</span><br><span class="line">        packet.<span class="built_in">extract</span>(hdr.ipv4);</span><br><span class="line">        transition accept;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Ingress processing 部分</strong>：要看看隧道头有没有失效，如果失效了，则进行 <code>ipv4</code> 的查表转发，如果没失效，就根据隧道头的 <code>dst_id</code> 查表得到转发的端口。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// <span class="doctag">TODO:</span> declare a new action: myTunnel_forward(egressSpec_t port)</span></span><br><span class="line">    <span class="comment">// 简单地将出口端口（即 standard_metadata 总线的 egress_spec 字段）设置为控制平面提供的端口号</span></span><br><span class="line">    <span class="function">action <span class="title">myTunnel_forward</span><span class="params">(egressSpec_t port)</span> </span>&#123;</span><br><span class="line">        standard_metadata.egress_spec = port;</span><br><span class="line">    &#125;</span><br><span class="line">    table myTunnel_exact &#123;</span><br><span class="line">        <span class="comment">// dst_id 作为 key，而且必须是精确对比</span></span><br><span class="line">        key = &#123;</span><br><span class="line">            hdr.myTunnel.dst_id: exact;</span><br><span class="line">        &#125;</span><br><span class="line">        actions = &#123;</span><br><span class="line">            myTunnel_forward;</span><br><span class="line">            drop;</span><br><span class="line">            NoAction;</span><br><span class="line">        &#125;</span><br><span class="line">        size = <span class="number">1024</span>;</span><br><span class="line">        default_action = <span class="built_in">drop</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> declare a new table: myTunnel_exact</span></span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> also remember to add table entries!</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    apply &#123;</span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span> Update control flow</span></span><br><span class="line">        <span class="comment">// 如果隧道头失效，按 ipv4 地址进行转发</span></span><br><span class="line">        <span class="keyword">if</span> (hdr.ipv4.<span class="built_in">isValid</span>() &amp;&amp; !hdr.myTunnel.<span class="built_in">isValid</span>()) &#123;</span><br><span class="line">            ipv4_lpm.<span class="built_in">apply</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (hdr.myTunnel.<span class="built_in">isValid</span>()) &#123;</span><br><span class="line">            myTunnel_exact.<span class="built_in">apply</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Deparser 部分</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">control <span class="title">MyDeparser</span><span class="params">(packet_out packet, in headers hdr)</span> </span>&#123;</span><br><span class="line">    apply &#123;</span><br><span class="line">        packet.<span class="built_in">emit</span>(hdr.ethernet);</span><br><span class="line">        <span class="comment">// <span class="doctag">TODO:</span> emit myTunnel header as well</span></span><br><span class="line">        packet.<span class="built_in">emit</span>(hdr.myTunnel);</span><br><span class="line">        packet.<span class="built_in">emit</span>(hdr.ipv4);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>补充之后，顺利 ping 通：</p>
+<p><img src="/assets/P4/P4-Tutorials%201.3testping.png" alt="ping"></p>
+<p>接下来测试隧道的功能，使用命令 <code>xterm h1 h2 h3</code> 打开节点的命令行测试隧道（其中 <code>send.py</code>，<code>receive.py</code> 文件是在进行测试时用到的生成发送的数据包与接受数据包的文件）：</p>
+<ul>
+<li><p>首先是不加隧道头，<code>h1</code> 正常发送，目的地址为 <code>10.0.2.2</code>，即 <code>h2</code> 的 <code>ip</code> 地址:</p>
+<p><img src="/assets/P4/P4-Tutorials%201.4test_h1pingh2.png" alt="h1pingh2"></p>
+<p>然后 <code>h2</code> 接收到的结果：</p>
+<p><img src="/assets/P4/P4-Tutorials%201.5test_h2recive.png" alt="h2receive"></p>
+</li>
+<li><p>然后 <code>h1</code> 发送带有隧道头的数据包，设置隧道头的 <code>dst_id</code> 为 3，也就是 <code>h3</code> 对应的 <code>dst_id</code>，但目的 <code>ip</code> 地址还是 <code>h2</code> 的 <code>ip</code> 地址：</p>
+<p><img src="/assets/P4/P4-Tutorials%201.6test_h1pingh3.png" alt="h1pingh3"></p>
+<p>此时 <code>h2</code> 没有接收到数据包，<code>h3</code> 接收到的结果：</p>
+<p><img src="/assets/P4/P4-Tutorials%201.7test_h3receive.png" alt="h3receive"></p>
+</li>
+</ul>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+      <div class="card-cover" background-image-lazy data-img="https://cdn.magdeleine.co/wp-content/uploads/2017/04/vc5ovon3gzu-lydia-harper-1400x933.jpg"></div>
+    
+    <div class="card-text">
+      
+        <a href="/2023/02/06/P4/%E3%80%90P4-Utils%E3%80%91%E4%B8%8B%E8%BD%BD%E4%B8%8E%E4%BD%BF%E7%94%A8/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">【P4-Utils】下载与使用</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+    <div class="valine-container comments-container content-padding--primary soft-size--large soft-style--box">
+      <div id="valine_thread" class="valine-thread"></div>
+    </div>
+    <script type="text/javascript" src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script type="text/javascript" src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <script type="text/javascript">
+      new Valine({
+        el: "#valine_thread",
+        appId: "kijfJ6KM8wj7sqyTIbyRTPoV-gzGzoHsz",
+        appKey: "flq2Xa3mOpDb24YvPGLXya9w",
+        avatar: "mm",
+        placeholder: "随便说点什么叭～",
+        notify: true,
+        visitor: true,
+        pageSize: 10,
+      });
+    </script>
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://avatars.githubusercontent.com/u/54944075?v=4" class="soft-size--round soft-style--box" alt="怪兽少女">
+    
+    
+      <h2>怪兽少女</h2>
+    
+    
+      <p>可爱无敌，秃头不慌！！！</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>12</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        3
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        9
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+<section class="widget-toc widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-toc" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M134.50666666 767.46666668H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.23999999v50.13333333c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H134.50666666c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.13333333c0.10666668-27.73333333 22.50666668-50.24000001 50.24000001-50.24000001zM84.37333332 541.65333333h326.18666669c27.73333333 0 50.24000001 22.39999999 50.23999999 50.13333334v50.24000001c0 27.73333333-22.50666668 50.24000001-50.24000002 50.23999999H84.37333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.23999999v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333334zM134.50666666 315.83999999H460.8c27.73333333 0 50.24000001 22.50666668 50.24000001 50.24000001v50.24000001c0 27.73333333-22.50666668 50.13333334-50.24000001 50.13333333H134.50666666c-27.73333333 0-50.24000001-22.39999999-50.23999999-50.13333333v-50.24000001c0.10666668-27.84000001 22.50666668-50.24000001 50.24000001-50.23999999zM209.81333332 89.91999999h326.18666671c27.73333333 0 50.24000001 22.39999999 50.23999997 50.13333335v50.23999999c0 27.73333333-22.50666668 50.24000001-50.24000001 50.24000001H209.81333332c-27.73333333 0-50.24000001-22.50666668-50.23999999-50.24000001v-50.24000001c0-27.73333333 22.50666668-50.13333334 50.24000001-50.13333333zM692.05333333 623.36l274.66666669 176.00000002c23.36000001 14.93333333 30.08 45.97333334 15.14666666 69.33333332L954.77333334 910.93333333c-14.93333333 23.25333334-45.97333334 30.08-69.33333335 15.14666667l-274.66666666-176c-23.36000001-14.93333333-30.08-45.97333334-15.14666667-69.33333333l27.09333334-42.24000001c14.93333333-23.36000001 46.08000001-30.08 69.33333333-15.14666666z" fill="currentColor"></path>
+</svg>
+    <span>TOC</span>
+  </div>
+  <div class="widget-body">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Basic-Forwarding-%EF%BC%88%E5%9F%BA%E7%A1%80-ipv4-%E8%BD%AC%E5%8F%91%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1.1 Basic Forwarding （基础 ipv4 转发）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-Basic-Tunneling%EF%BC%88%E9%9A%A7%E9%81%93%E4%BC%A0%E8%BE%93%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">1.2 Basic Tunneling（隧道传输）</span></a></li></ol>
+  </div>
+</section>
+
+
+      
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+        <li class="categorys-list-item">
+          <a href="/categories/DeepLearning/">
+            DeepLearning (5)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/P4/">
+            P4 (5)
+          </a>
+        </li>
+      
+        <li class="categorys-list-item">
+          <a href="/categories/Psychology/">
+            Psychology (1)
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/DeepLearning/" style="font-size: 20px;" class="tags-cloud-10">DeepLearning</a> <a href="/tags/Life/" style="font-size: 10px;" class="tags-cloud-0">Life</a> <a href="/tags/LinearRegression/" style="font-size: 10px;" class="tags-cloud-0">LinearRegression</a> <a href="/tags/P4/" style="font-size: 20px;" class="tags-cloud-10">P4</a> <a href="/tags/P4-Tutorials/" style="font-size: 13.33px;" class="tags-cloud-3">P4-Tutorials</a> <a href="/tags/P4-Utils/" style="font-size: 10px;" class="tags-cloud-0">P4-Utils</a> <a href="/tags/Psychology/" style="font-size: 10px;" class="tags-cloud-0">Psychology</a> <a href="/tags/Pytorch/" style="font-size: 16.67px;" class="tags-cloud-7">Pytorch</a> <a href="/tags/Ubuntu/" style="font-size: 10px;" class="tags-cloud-0">Ubuntu</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/king-wk/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+    </div>
+     
+    <p>&copy; 2023 <a href="/" target="_blank">double 静</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+</body>
+</html>
